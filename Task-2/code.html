@@ -1,1 +1,880 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamHome - Real Estate</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: whitesmoke;
+            color: black;
+        }
+
+        /* Navigation */
+        header {
+            background: midnightblue;
+            color: white;
+            padding: 20px 6%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: orange;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 22px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            color: orange;
+        }
+
+        .post-btn {
+            background: orange;
+            color: midnightblue;
+            padding: 11px 16px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 330px;
+            padding: 65px 6%;
+            color: white;
+            background: linear-gradient(
+                90deg,
+                midnightblue,
+                steelblue
+            );
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 18px;
+        }
+
+        .hero p {
+            font-size: 17px;
+            line-height: 1.7;
+            margin-bottom: 22px;
+        }
+
+        .hero a {
+            display: inline-block;
+            background: orange;
+            color: midnightblue;
+            padding: 13px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .hero img {
+            width: 35%;
+            max-width: 400px;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            margin: -25px 6% 30px;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px lightgray;
+            position: relative;
+        }
+
+        .search-section h2 {
+            margin-bottom: 10px;
+            color: midnightblue;
+        }
+
+        .search-note {
+            color: dimgray;
+            font-size: 13px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 15px;
+            margin-top: 18px;
+        }
+
+        .filters input,
+        .filters select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid silver;
+            border-radius: 5px;
+            background: white;
+            font-size: 14px;
+        }
+
+        /* Common Sections */
+        .section {
+            padding: 25px 6%;
+        }
+
+        .section h2 {
+            margin-bottom: 10px;
+            color: midnightblue;
+        }
+
+        .section-intro {
+            color: dimgray;
+            margin-bottom: 25px;
+        }
+
+        /* Property Cards */
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 24px;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 14px lightgray;
+            transition: transform 0.3s;
+        }
+
+        .property-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .property-image {
+            position: relative;
+        }
+
+        .property-image img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            padding: 7px 12px;
+            background: orange;
+            color: midnightblue;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .property-info {
+            padding: 18px;
+        }
+
+        .property-info h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .location {
+            color: dimgray;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .price {
+            font-size: 23px;
+            color: midnightblue;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .price small {
+            font-size: 13px;
+            color: dimgray;
+            font-weight: normal;
+        }
+
+        .details {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            flex-wrap: wrap;
+            padding: 12px 0;
+            border-top: 1px solid lightgray;
+            border-bottom: 1px solid lightgray;
+            font-size: 13px;
+        }
+
+        .amenities {
+            color: dimgray;
+            font-size: 13px;
+            line-height: 1.8;
+            margin: 12px 0;
+        }
+
+        /* HTML-only Property Details */
+        .property-card details {
+            margin-top: 12px;
+            border-top: 1px solid lightgray;
+            padding-top: 12px;
+        }
+
+        .property-card summary {
+            color: midnightblue;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .more-info {
+            padding-top: 12px;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        /* Comparison Table */
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 3px 12px lightgray;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 650px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 16px;
+            border-bottom: 1px solid lightgray;
+        }
+
+        th {
+            background: midnightblue;
+            color: white;
+        }
+
+        tr:hover {
+            background: whitesmoke;
+        }
+
+        /* Contact */
+        .contact-box {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 3px 12px lightgray;
+        }
+
+        .contact-box p {
+            margin: 10px 0;
+        }
+
+        .contact-box a {
+            color: midnightblue;
+        }
+
+        /* Footer */
+        footer {
+            background: midnightblue;
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+            margin-top: 40px;
+        }
+
+        footer h2 {
+            color: orange;
+            margin-bottom: 12px;
+        }
+
+        footer p {
+            margin: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1000px) {
+            .property-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .filters {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 650px) {
+            header {
+                justify-content: center;
+            }
+
+            nav {
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 40px 6%;
+            }
+
+            .hero h1 {
+                font-size: 30px;
+            }
+
+            .hero img {
+                display: none;
+            }
+
+            .property-grid,
+            .filters {
+                grid-template-columns: 1fr;
+            }
+
+            .search-section {
+                margin-left: 4%;
+                margin-right: 4%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation Bar -->
+    <header>
+        <a href="#home" class="logo">DreamHome.</a>
+
+        <nav>
+            <a href="#home">Home</a>
+            <a href="#properties">Properties</a>
+            <a href="#compare">Compare</a>
+            <a href="#contact">Contact</a>
+            <a href="mailto:info@dreamhome.example"
+               class="post-btn">List Your Property</a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+
+        <div>
+            <h1>Find Your Dream Home</h1>
+
+            <p>
+                Discover beautiful houses, modern apartments
+                and rental properties in your favourite city.
+            </p>
+
+            <a href="#properties">Explore Properties</a>
+        </div>
+
+        <img
+            src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=700&q=80"
+            alt="Beautiful modern house">
+    </section>
+
+    <!-- Search Section -->
+    <section class="search-section">
+
+        <h2>Search Properties</h2>
+
+        <p class="search-note">
+            Choose your preferred property requirements.
+            This HTML and CSS version displays all properties below.
+        </p>
+
+        <div class="filters">
+
+            <input type="text"
+                   placeholder="Search property or location">
+
+            <select>
+                <option>Buy or Rent</option>
+                <option>Buy</option>
+                <option>Rent</option>
+            </select>
+
+            <select>
+                <option>All Locations</option>
+                <option>Vijayawada</option>
+                <option>Hyderabad</option>
+                <option>Bengaluru</option>
+                <option>Amaravati</option>
+            </select>
+
+            <select>
+                <option>All Property Types</option>
+                <option>House</option>
+                <option>Apartment</option>
+                <option>Villa</option>
+            </select>
+
+            <select>
+                <option>Any Bedrooms</option>
+                <option>1+ Bedroom</option>
+                <option>2+ Bedrooms</option>
+                <option>3+ Bedrooms</option>
+                <option>4+ Bedrooms</option>
+            </select>
+
+            <select>
+                <option>Any Maximum Price</option>
+                <option>₹10,000</option>
+                <option>₹25,000</option>
+                <option>₹50 Lakhs</option>
+                <option>₹1 Crore</option>
+                <option>₹2 Crores</option>
+            </select>
+
+        </div>
+    </section>
+
+    <!-- Property Listings -->
+    <section class="section" id="properties">
+
+        <h2>Featured Properties</h2>
+
+        <p class="section-intro">
+            Explore our selection of homes and apartments.
+        </p>
+
+        <div class="property-grid">
+
+            <!-- Property 1 -->
+            <article class="property-card">
+
+                <div class="property-image">
+                    <span class="badge">FOR SALE</span>
+
+                    <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=700&q=80"
+                         alt="Luxury Family Villa">
+                </div>
+
+                <div class="property-info">
+
+                    <h3>Luxury Family Villa</h3>
+
+                    <p class="location">
+                        📍 Benz Circle, Vijayawada
+                    </p>
+
+                    <p class="price">₹95 Lakhs</p>
+
+                    <div class="details">
+                        <span>🛏 4 Beds</span>
+                        <span>🛁 3 Baths</span>
+                        <span>📐 2400 sq.ft.</span>
+                    </div>
+
+                    <p class="amenities">
+                        <strong>Amenities:</strong>
+                        Parking • Garden • Security
+                    </p>
+
+                    <details>
+                        <summary>View Details</summary>
+
+                        <div class="more-info">
+                            <p><strong>Type:</strong> Villa</p>
+                            <p><strong>Listing:</strong> Buy</p>
+                            <p>A spacious family villa with a private garden,
+                            modern kitchen and comfortable bedrooms.</p>
+                        </div>
+                    </details>
+
+                </div>
+            </article>
+
+            <!-- Property 2 -->
+            <article class="property-card">
+
+                <div class="property-image">
+                    <span class="badge">FOR SALE</span>
+
+                    <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=700&q=80"
+                         alt="Modern City Apartment">
+                </div>
+
+                <div class="property-info">
+
+                    <h3>Modern City Apartment</h3>
+
+                    <p class="location">
+                        📍 Kukatpally, Hyderabad
+                    </p>
+
+                    <p class="price">₹65 Lakhs</p>
+
+                    <div class="details">
+                        <span>🛏 3 Beds</span>
+                        <span>🛁 2 Baths</span>
+                        <span>📐 1500 sq.ft.</span>
+                    </div>
+
+                    <p class="amenities">
+                        <strong>Amenities:</strong>
+                        Parking • Gym • Security
+                    </p>
+
+                    <details>
+                        <summary>View Details</summary>
+
+                        <div class="more-info">
+                            <p><strong>Type:</strong> Apartment</p>
+                            <p><strong>Listing:</strong> Buy</p>
+                            <p>A modern apartment with a gym,
+                            secure entrance and convenient city access.</p>
+                        </div>
+                    </details>
+
+                </div>
+            </article>
+
+            <!-- Property 3 -->
+            <article class="property-card">
+
+                <div class="property-image">
+                    <span class="badge">FOR RENT</span>
+
+                    <img src="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=700&q=80"
+                         alt="Affordable Rental House">
+                </div>
+
+                <div class="property-info">
+
+                    <h3>Affordable Rental House</h3>
+
+                    <p class="location">
+                        📍 Patamata, Vijayawada
+                    </p>
+
+                    <p class="price">
+                        ₹12,000 <small>/month</small>
+                    </p>
+
+                    <div class="details">
+                        <span>🛏 2 Beds</span>
+                        <span>🛁 1 Bath</span>
+                        <span>📐 1000 sq.ft.</span>
+                    </div>
+
+                    <p class="amenities">
+                        <strong>Amenities:</strong> Parking
+                    </p>
+
+                    <details>
+                        <summary>View Details</summary>
+
+                        <div class="more-info">
+                            <p><strong>Type:</strong> House</p>
+                            <p><strong>Listing:</strong> Rent</p>
+                            <p>A comfortable rental house suitable
+                            for a small family.</p>
+                        </div>
+                    </details>
+
+                </div>
+            </article>
+
+            <!-- Property 4 -->
+            <article class="property-card">
+
+                <div class="property-image">
+                    <span class="badge">FOR SALE</span>
+
+                    <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=700&q=80"
+                         alt="Premium Garden Villa">
+                </div>
+
+                <div class="property-info">
+
+                    <h3>Premium Garden Villa</h3>
+
+                    <p class="location">
+                        📍 Whitefield, Bengaluru
+                    </p>
+
+                    <p class="price">₹1.5 Crore</p>
+
+                    <div class="details">
+                        <span>🛏 4 Beds</span>
+                        <span>🛁 4 Baths</span>
+                        <span>📐 2800 sq.ft.</span>
+                    </div>
+
+                    <p class="amenities">
+                        <strong>Amenities:</strong>
+                        Parking • Garden • Gym • Security
+                    </p>
+
+                    <details>
+                        <summary>View Details</summary>
+
+                        <div class="more-info">
+                            <p><strong>Type:</strong> Villa</p>
+                            <p><strong>Listing:</strong> Buy</p>
+                            <p>A premium villa featuring spacious rooms,
+                            a landscaped garden and modern amenities.</p>
+                        </div>
+                    </details>
+
+                </div>
+            </article>
+
+            <!-- Property 5 -->
+            <article class="property-card">
+
+                <div class="property-image">
+                    <span class="badge">FOR RENT</span>
+
+                    <img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=700&q=80"
+                         alt="Compact Studio Apartment">
+                </div>
+
+                <div class="property-info">
+
+                    <h3>Compact Studio Apartment</h3>
+
+                    <p class="location">
+                        📍 Madhapur, Hyderabad
+                    </p>
+
+                    <p class="price">
+                        ₹18,000 <small>/month</small>
+                    </p>
+
+                    <div class="details">
+                        <span>🛏 1 Bed</span>
+                        <span>🛁 1 Bath</span>
+                        <span>📐 650 sq.ft.</span>
+                    </div>
+
+                    <p class="amenities">
+                        <strong>Amenities:</strong> Gym • Security
+                    </p>
+
+                    <details>
+                        <summary>View Details</summary>
+
+                        <div class="more-info">
+                            <p><strong>Type:</strong> Apartment</p>
+                            <p><strong>Listing:</strong> Rent</p>
+                            <p>A compact apartment for students
+                            and working professionals.</p>
+                        </div>
+                    </details>
+
+                </div>
+            </article>
+
+            <!-- Property 6 -->
+            <article class="property-card">
+
+                <div class="property-image">
+                    <span class="badge">FOR SALE</span>
+
+                    <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=700&q=80"
+                         alt="Spacious Family Home">
+                </div>
+
+                <div class="property-info">
+
+                    <h3>Spacious Family Home</h3>
+
+                    <p class="location">
+                        📍 Main Road, Amaravati
+                    </p>
+
+                    <p class="price">₹48 Lakhs</p>
+
+                    <div class="details">
+                        <span>🛏 3 Beds</span>
+                        <span>🛁 2 Baths</span>
+                        <span>📐 1800 sq.ft.</span>
+                    </div>
+
+                    <p class="amenities">
+                        <strong>Amenities:</strong> Parking • Garden
+                    </p>
+
+                    <details>
+                        <summary>View Details</summary>
+
+                        <div class="more-info">
+                            <p><strong>Type:</strong> House</p>
+                            <p><strong>Listing:</strong> Buy</p>
+                            <p>A spacious independent home with parking
+                            and an outdoor garden area.</p>
+                        </div>
+                    </details>
+
+                </div>
+            </article>
+
+        </div>
+    </section>
+
+    <!-- Comparison Table -->
+    <section class="section" id="compare">
+
+        <h2>Compare Properties</h2>
+
+        <p class="section-intro">
+            Compare all available property details below.
+        </p>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Property</th>
+                        <th>Location</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Bedrooms</th>
+                        <th>Area</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>Luxury Family Villa</td>
+                        <td>Vijayawada</td>
+                        <td>Villa</td>
+                        <td>₹95 Lakhs</td>
+                        <td>4</td>
+                        <td>2400 sq.ft.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Modern City Apartment</td>
+                        <td>Hyderabad</td>
+                        <td>Apartment</td>
+                        <td>₹65 Lakhs</td>
+                        <td>3</td>
+                        <td>1500 sq.ft.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Affordable Rental House</td>
+                        <td>Vijayawada</td>
+                        <td>House</td>
+                        <td>₹12,000/month</td>
+                        <td>2</td>
+                        <td>1000 sq.ft.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Premium Garden Villa</td>
+                        <td>Bengaluru</td>
+                        <td>Villa</td>
+                        <td>₹1.5 Crore</td>
+                        <td>4</td>
+                        <td>2800 sq.ft.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Compact Studio Apartment</td>
+                        <td>Hyderabad</td>
+                        <td>Apartment</td>
+                        <td>₹18,000/month</td>
+                        <td>1</td>
+                        <td>650 sq.ft.</td>
+                    </tr>
+
+                    <tr>
+                        <td>Spacious Family Home</td>
+                        <td>Amaravati</td>
+                        <td>House</td>
+                        <td>₹48 Lakhs</td>
+                        <td>3</td>
+                        <td>1800 sq.ft.</td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section" id="contact">
+
+        <h2>Contact Us</h2>
+
+        <div class="contact-box">
+            <p>Your dream home is just a search away.</p>
+
+            <p>
+                Email:
+                <a href="mailto:info@dreamhome.example">
+                    info@dreamhome.example
+                </a>
+            </p>
+
+            <p>For property listings, contact our team through email.</p>
+        </div>
+
+    </section>
+
+    <!-- Footer -->
+    <footer>
+
+        <h2>DreamHome.</h2>
+
+        <p>Your dream home is just a search away.</p>
+
+        <p>© 2026 DreamHome. All rights reserved.</p>
+
+    </footer>
+
+</body>
+</html>
+
